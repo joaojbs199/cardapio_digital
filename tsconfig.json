@@ -1,0 +1,41 @@
+{
+    "compilerOptions": {
+      "target": "es6",
+      "lib": [
+        "dom",
+        "dom.iterable",
+        "esnext"
+      ],
+      "baseUrl": ".",
+      "paths": {
+        "@public/*": ["./public/*"],
+        "@services/*": ["./src/services/*"],
+        "@styles/*": ["./src/styles/*"],
+        "@contexts/*": ["./src/contexts/*"],
+        "@components/*": ["./src/components/*"],
+  
+      },
+      "typeRoots" : ["@types", "./node_modules/@types", "./typings"],
+      "allowJs": true,
+      "skipLibCheck": true,
+      "strict": false,
+      "forceConsistentCasingInFileNames": true,
+      "noEmit": true,
+      "incremental": true,
+      "esModuleInterop": true,
+      "module": "esnext",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "jsx": "preserve"
+    },
+    "include": [
+      "next-env.d.ts",
+      "**/*.ts",
+      "**/*.tsx"
+  , "src/pages/index.ts", "src/pages/signupPage.tsx", "src/pages/api/fileStorage/uploadLogo.ts", "src/pages/user.js", "src/components/loader.tsx", "src/services/userPanelMiddleware.ts", "src/services/userPanelMiddleware.ts", "src/services/mongoDbConnect.js", "src/pages/api/mongoTest.js", "src/components/navbar.tsx", "src/pages/[userPanel]/[user].tsx", "next.config.js"  ],
+    "exclude": [
+      "node_modules"
+    ]
+  }
+  
