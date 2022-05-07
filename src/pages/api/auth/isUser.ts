@@ -19,18 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const dbAdminUri = `mongodb+srv://${dbUser}:${dbAdminPass}@administration.zjrcn.mongodb.net/${dbAdminDatabase}?retryWrites=true&w=majority`
 
         const admin = new MongoClient(dbAdminUri);
-        await admin.connect()
-            /* .then((res) => {
-                console.log(
-                'Connected to Distribution API Database - Initial Connection'
-                );
-            })
-            .catch((err) => {
-                console.log(
-                `Initial Distribution API Database connection error occured -`,
-                err
-                );
-            }); */
+        await admin.connect();
 
         const adminDb = admin.db();
         const adminCollection = adminDb.collection(dbAdminCollection);
