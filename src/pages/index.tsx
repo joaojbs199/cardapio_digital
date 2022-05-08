@@ -33,7 +33,7 @@ export const getServerSideProps = async (context) => {
     
         return{
           redirect:{
-            destination: `/user/${routeName}`,
+            destination: `/userPanel/${routeName}`,
             permanent: false
           }
         }
