@@ -27,29 +27,6 @@ const initPanelsState: PanelsStateData = {
     shareAccess: false,
 }
 
-//*****************************Selected options controller
-
-type OptionsData = {
-    createGroup: 'createGroup' | undefined;
-    createSubGroup: 'createSubGroup' | undefined;
-    createItem: 'createItem' | undefined;
-}
-
-type SetOptionsData = {
-    type: 'createGroup' | 'createSubGroup' | 'createItem';
-    option: string;
-}
-
-const handleOptions = ( options: OptionsData, setOptions: SetOptionsData ) => {
-    return {...options, [setOptions.type]: setOptions.option}
-}
-
-const initOptions: OptionsData = {
-    createGroup: undefined,
-    createSubGroup: undefined,
-    createItem: undefined,
-}
-
 //************************************ Navbar views controller
 
 type ViewData = {
@@ -81,10 +58,8 @@ const initView: ViewData = {
 type ControllersData = {
     panelsState: PanelsStateData;
     setPanelsState: Dispatch<PanelsData>;
-    options: OptionsData;
-    setOptions: Dispatch<SetOptionsData>;
     view: ViewData;
-    setView: Dispatch<SetViewData>
+    setView: Dispatch<SetViewData>;
 }
 
 export const Controllers = createContext({} as ControllersData);
@@ -92,11 +67,10 @@ export const Controllers = createContext({} as ControllersData);
 export const ControllersProvider = ({children}) => {
 
     const [ panelsState, setPanelsState ] = useReducer( handlePanelStates, initPanelsState ); //View panels controller
-    const [ options, setOptions ] = useReducer( handleOptions, initOptions ); //Selected options controller
     const [ view, setView ] = useReducer(handleView, initView) //Navbar view
 
     return (
-        <Controllers.Provider value={{ panelsState, setPanelsState, options, setOptions, view, setView }} >
+        <Controllers.Provider value={{ panelsState, setPanelsState, view, setView }} >
             {children}
         </Controllers.Provider>
     )

@@ -1,20 +1,27 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import axios from 'axios';
 import styles from '@styles/Cardapio.module.css';
 import Image from "next/image";
 import ReactStars from "react-star-ratings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faXmark, faCircleUp } from "@fortawesome/free-solid-svg-icons";
 import { baseURL } from "@services/baseUrlConfig";
+import { categoryButtonsReducer } from "@services/cardapioMiddleware";
+
 
 export default function Cardapio(props) {
 
-    /* useEffect(() => {
-        window.history.pushState({}, null, `/cardapio/${props.establishmentName}`);
-    }, [props]) */
-
     const [ cardapio, setCardapio ] = useState(props.menu.cardapio);
+    const emptyCardapio = cardapio.categories.length === 0;
+
     const [ subcategories, setSubcategories ] = useState([]);
+    const emptySubcategories = subcategories.length === 0;
+
+    const initialCategoryButtons = cardapio.categories.reduce((buttons, currentButton) => {
+        return {...buttons, [currentButton.categoryId]: false}
+    }, {});
+    const [ categoryButtons, setCategoryButtons ] = useReducer(categoryButtonsReducer, initialCategoryButtons);
+
     const [ ratingConfig, setRatingConfig ] = useState({
         id:'',
         isRating: false,
@@ -22,17 +29,17 @@ export default function Cardapio(props) {
         action: ""
     });
 
-    const handleSelectedCategory = (e) => {
-        const categoryId = e.target.id;
+    const handleSelectedCategory = (categoryId) => {
+
         const subcategoriesFilter = cardapio.subcategories.filter((subcategory) => {
             return subcategory.categoryId === categoryId;
         });
 
         setSubcategories(subcategoriesFilter);
+
     }
 
-    const getRating = (e) => {
-        const id = e.target.id;
+    const getRating = (id) => {
         const categoryId = id.split('-')[0];
         const subcategoryId = id.split('-')[1];
         const itemId = id.split('-')[2];
@@ -121,6 +128,8 @@ export default function Cardapio(props) {
         });
     }
 
+
+    
     return (
         <div className={styles.container}>
             <header className={styles.estPresentation}>
@@ -139,8 +148,12 @@ export default function Cardapio(props) {
             </header>
 
             <div className={styles.categoriesList}>
+                { emptyCardapio && <button className={styles.emptyCategories}>Ainda sem itens</button>}
                 {cardapio.categories.map((category) => (
-                    <button onClick={(e) => handleSelectedCategory(e)} id={category.categoryId} className={styles.categoryButton} key={category.categoryId}>{category.categoryName}</button>
+                    <button onClick={() => {
+                        setCategoryButtons({id: category.categoryId, state: true});
+                        handleSelectedCategory(category.categoryId);
+                    }} id={category.categoryId} className={categoryButtons[category.categoryId] ? styles.categoryButtonActive : styles.categoryButton} key={category.categoryId}>{category.categoryName}</button>
                 ))}
             </div>
 
@@ -167,8 +180,8 @@ export default function Cardapio(props) {
                                         }, 0) / (filteredItem.ratings.length === 1 ? 1 : filteredItem.ratings.length - 1)).toFixed(1)}
                                         <div className={styles.itemRatingIcon} ><FontAwesomeIcon icon={faStar} /></div>
                                     </div>
-                                    <button id={`${filteredItem.categoryId}-${filteredItem.subcategoryId}-${filteredItem.itemId}`}
-                                        onClick={(e) => {getRating(e)}}
+                                    <button
+                                        onClick={() => getRating(`${filteredItem.categoryId}-${filteredItem.subcategoryId}-${filteredItem.itemId}`)}
                                         className={styles.rate}>
                                             Avaliar
                                     </button>
@@ -179,6 +192,10 @@ export default function Cardapio(props) {
 
                     </section>
                 ))}
+                { !emptyCardapio && emptySubcategories && <div className={styles.initInstruction}>
+                    <FontAwesomeIcon className={styles.initInstructionIcon} beat icon={faCircleUp} />
+                    <h1 className={styles.initInstructionTitle}>Começe selecionando uma das categorias</h1>
+                </div>}
             </div>
 
             {ratingConfig.isRating && <div className={styles.getRatingOuter}>
