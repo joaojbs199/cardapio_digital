@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600&family=M+PLUS+Rounded+1c:wght@900&family=Varela+Round&display=swap');
+
 @media screen and (min-width: 320px) and (max-width: 914px) {
 
     .container {
@@ -70,6 +70,7 @@
         padding: 5px 10px;
         margin-top: 5px;
         display: flex;
+        justify-content: flex-start;
         overflow: auto;
         box-shadow: #0000001a 0px 4px 6px -1px, #0000000f 0px 2px 4px -1px;
     }
@@ -90,7 +91,6 @@
         font-weight: 500;
         font-size: 13px;
         letter-spacing: 1px;
-        margin: auto;
         margin-right: 10px;
         padding: 2px 8px;
         text-align: center;
@@ -100,6 +100,24 @@
         background-color: #FFBA08;
         color: #FFF;
         font-weight: 600;
+    }
+
+    .categoryButtonActive {
+        min-width: 120px;
+        width: fit-content;
+        height: 30px;
+        border: 1px solid #ffb700b9;
+        border-radius: 5px;
+        background-color: #FFBA08;
+        white-space: nowrap;
+        font-family: 'Dosis', sans-serif;
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: 1px;
+        margin-right: 10px;
+        padding: 2px 8px;
+        text-align: center;
+        color: #FFF;
     }
 
     .subcategoriesList {
