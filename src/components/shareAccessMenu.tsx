@@ -2,7 +2,7 @@ import styles from '@styles/ShareAccessMenu.module.css';
 import { useContext } from 'react';
 import { Controllers } from '@contexts/ControllersContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faArrowUpRightFromSquare, faDownload, faEllipsis, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faXmark, faArrowUpRightFromSquare, faDownload, faSpinner, faShare } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import Image from 'next/image';
 
@@ -14,7 +14,31 @@ export default function ShareAccessMenu(props) {
     const establishmentName = props.establishmentName?.normalize('NFD')
         .replace(/[\u0300-\u036f]/g,'')
         .replace(/\s+$/g, '')
-        .replace(/ /g, '-');
+        .replace(/ /g, '-');    
+
+
+    /* const downloadQrCode = () => {
+        const downloadTag = document.createElement('a');
+        downloadTag.href = qrCode;
+        downloadTag.setAttribute('download', `qrcode.png`);
+        document.body.appendChild(downloadTag);
+        downloadTag.click();
+        document.body.removeChild(downloadTag);
+    } */
+
+    const shareLink = () => {
+        
+        if(navigator.share) {
+
+            navigator.share({
+                title: "Easy menu - Cardápio digital",
+                text: "Este é o link do nosso cardápio! Acesse e confira nossas opções.",
+                url: link
+            });
+        } else {
+            navigator.clipboard.writeText(link).then(() => alert("Copiado para a área de transferência"));
+        }
+    }
 
     const openCardapio = () => {
         const cardapioUrl = link;
@@ -24,27 +48,6 @@ export default function ShareAccessMenu(props) {
         document.body.appendChild(openTag);
         openTag.click();
         document.body.removeChild(openTag);
-    }    
-
-
-    const downloadQrCode = () => {
-        const downloadTag = document.createElement('a');
-        downloadTag.href = qrCode;
-        downloadTag.setAttribute('download', `qrcode.png`);
-        document.body.appendChild(downloadTag);
-        downloadTag.click();
-        document.body.removeChild(downloadTag);
-    }
-
-    const shareLink = () => {
-
-        const url = `https://api.whatsapp.com/send?text=Este é o nosso cardápio digital: %0a%0a${link}. %0a%0aAcesse e veja nossas opções.`
-        const shareTag = document.createElement('a');
-        shareTag.href = url;
-        shareTag.target = '_blank';
-        document.body.appendChild(shareTag);
-        shareTag.click();
-        document.body.removeChild(shareTag);
     }
 
     return (
@@ -77,7 +80,7 @@ export default function ShareAccessMenu(props) {
                         <div className={styles.buttonsToShareDiv}>
 
                             <button disabled style={{backgroundColor: '#DDD'}} onClick={() => {
-                                downloadQrCode();
+                                //downloadQrCode();
                             }} className={styles.shareButtons}>
                                 <FontAwesomeIcon className={styles.shareButtonsIcon} icon={faDownload} />
                             </button>
@@ -86,7 +89,7 @@ export default function ShareAccessMenu(props) {
                                 shareLink();
                                 setPanelsState({name: 'emptyPresentation'});
                             }} className={styles.shareButtons}>
-                                <FontAwesomeIcon className={styles.shareButtonsIcon} icon={faWhatsapp} />
+                                <FontAwesomeIcon className={styles.shareButtonsIcon} icon={faShare} />
                             </button>
 
                             <button onClick={() => {
