@@ -2,7 +2,7 @@
 
 import { ChangeEvent } from "react";
 import { clientBasicRequest } from "./clientRequests";
-import { getFileToConvert, uploadConvertedFile } from '@services/createConvertedFile';
+import { getFileToConvert, uploadConvertedFile } from '@services/createConvertedImage';
 
 type SelectOptionData = {
     categoryId?: string;

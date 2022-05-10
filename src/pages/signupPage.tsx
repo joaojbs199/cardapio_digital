@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from "react";
 import { v4 } from 'uuid';
 import { createQrCode, createUser } from "@services/signupMiddleware";
-import { getFileToConvert, uploadConvertedFile } from '@services/createConvertedFile'; 
+import { getFileToConvert, uploadConvertedFile } from '@services/createConvertedImage'; 
 import { verifyEmail } from "@services/verifyEmail";
 import { checkUser } from "@services/checkUser";
 import validator from 'validator'
