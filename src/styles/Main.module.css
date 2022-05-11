@@ -1,0 +1,26 @@
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0e7;
+}
+
+.loginButton {
+    padding: 10px 20px;
+    font-family: 'Dosis', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    background-color: #f0f0f0e7;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    box-shadow: -5px -5px 20px #FFF, 5px 5px 9px #5e68794d;
+}
+
+.loginButton:hover {
+    transition: .5s;
+    box-shadow: -3px -1px 4px #ffffff73, 3px 2px 4px #5e68794d;
+}
